@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "lib": [
+      "ES2018",
+      "DOM"
+    ]
+  }
+}
