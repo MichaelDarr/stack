@@ -4,5 +4,7 @@
 # Exit on failure
 set -e
 
+npm install
+
 # Run the command passed as args to this script
 exec "$@"

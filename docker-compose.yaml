@@ -4,7 +4,73 @@ services:
         build:
             context: ./frontend
         ports:
-            - "8080:8080"
+            - "8888:8888"
+        environment:
+            BACKEND_GQL_PATH: /graphql
+            BACKEND_HOST: 172.16.240.20
+            BACKEND_PORT: 3333
+            BACKEND_SCHEME: http
+            FRONTEND_HOST: 172.16.240.10
+            FRONTEND_PORT: 8888
+        depends_on:
+            - "backend"
         volumes:
             - "./frontend:/mnt"
+            - "./schema/:/mnt/schema"
         working_dir: /mnt
+        networks:
+            main:
+                ipv4_address: 172.16.240.10
+    backend:
+        build:
+            context: ./backend
+        environment:
+            BACKEND_GQL_PATH: /graphql
+            BACKEND_HOST: 172.16.240.20
+            BACKEND_PLAYGROUND_PATH: /playground
+            BACKEND_PORT: 3333
+            BACKEND_POSTGRES_DEBUG: 'TRUE'
+            BACKEND_SCHEME: http
+            FRONTEND_PORT: 8888
+            POSTGRES_DB: pg
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: pass
+            POSTGRES_HOST: 172.16.240.30
+            POSTGRES_PORT: 5432
+            POSTGRES_SCHEMA: public
+        ports:
+            - "3333:3333"
+        volumes:
+            - "./backend/:/mnt"
+            - "./schema/:/mnt/schema"
+        working_dir: /mnt
+        networks:
+            main:
+                ipv4_address: 172.16.240.20
+    postgres:
+        image: postgres:13.2
+        restart: always
+        environment:
+            POSTGRES_DB: pg
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: pass
+            POSTGRES_HOST: 172.16.240.30
+            POSTGRES_PORT: 5432
+            POSTGRES_SCHEMA: public
+        ports:
+            - "5432:5432"
+        volumes:
+            - "pg_data:/var/lib/postgresql/data"
+        networks:
+            main:
+                ipv4_address: 172.16.240.30
+
+volumes:
+    pg_data:
+
+networks:
+    main:
+        ipam:
+            driver: default
+            config:
+                - subnet: "172.16.240.0/24"

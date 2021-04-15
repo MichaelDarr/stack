@@ -9,7 +9,7 @@ Track physical media collections on digital shelves
 * [Docker][docker]
 * [docker-compose][docker-compose]
 
-After running the following commands, visit [localhost:8080](http://localhost:8080/) in your browser.
+After running the following commands, visit [localhost:8888](http://localhost:8888/) in your browser.
 
 ```sh
 $ git clone git@github.com:MichaelDarr/shelf.git

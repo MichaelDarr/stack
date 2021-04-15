@@ -1,11 +1,11 @@
-import React, { StrictMode } from 'https://esm.sh/react@17.0.1';
-import ReactDOM from 'https://esm.sh/react-dom@17.0.1';
+import React, { StrictMode } from 'react';
+import ReactDOM from 'react-dom';
 
-import { App } from './App.tsx';
+import { App } from './App';
 
 ReactDOM.render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-  document.getElementById('root'),
+    <StrictMode>
+        <App/>
+    </StrictMode>,
+    document.getElementById('root'),
 );
