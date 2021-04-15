@@ -12,6 +12,7 @@ services:
             BACKEND_SCHEME: http
             FRONTEND_HOST: 172.16.240.10
             FRONTEND_PORT: 8888
+            TIER: development
         depends_on:
             - "backend"
         volumes:
@@ -38,6 +39,7 @@ services:
             POSTGRES_HOST: 172.16.240.30
             POSTGRES_PORT: 5432
             POSTGRES_SCHEMA: public
+            TIER: development
         ports:
             - "3333:3333"
         volumes:
