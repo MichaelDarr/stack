@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-// MustGet will return an environment variable or panic if it is not present
+// GetRequiredEnv returns an environment variable or panics if not present
 func GetRequiredEnv(key string) string {
 	val := os.Getenv(key)
 	if val == "" {
@@ -15,6 +15,7 @@ func GetRequiredEnv(key string) string {
 	return val
 }
 
+// GetRequiredBoolEnv returns an environment variable or panics if not present or not a boolean
 func GetRequiredBoolEnv(key string) bool {
 	val := GetRequiredEnv(key)
 	boolVal, err := strconv.ParseBool(val)
@@ -24,7 +25,7 @@ func GetRequiredBoolEnv(key string) bool {
 	return boolVal
 }
 
-// GetRequiredIntEnv will return an environment variable or panic if it is not present or not an integer
+// GetRequiredIntEnv returns an environment variable or panics if not present or not an integer
 func GetRequiredIntEnv(key string) int {
 	val := GetRequiredEnv(key)
 	intVal, err := strconv.Atoi(val)
