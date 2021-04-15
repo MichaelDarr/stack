@@ -1,14 +1,16 @@
+scalar UUID
+
 interface Node {
-  id: ID!
+  id: UUID!
 }
 
 type User implements Node {
-  id: ID!
+  id: UUID!
   name: String!
 }
 
 type Query {
-  user(id: ID!): User!
+  user(id: UUID!): User!
 }
 
 type Mutation {

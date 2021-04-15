@@ -2,13 +2,17 @@
 
 package model
 
+import (
+	"github.com/google/uuid"
+)
+
 type Node interface {
 	IsNode()
 }
 
 type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID   uuid.UUID `json:"id"`
+	Name string    `json:"name"`
 }
 
 func (User) IsNode() {}

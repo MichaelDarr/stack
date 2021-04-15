@@ -1,16 +1,5 @@
 package config
 
-// PostgresConfig contains PG database credentials
-type PostgresConfig struct {
-	Debug    bool
-	Host     string
-	Name     string
-	Password string
-	Port     int
-	Schema   string
-	User     string
-}
-
 // ServerConfig defines the configuration for the server
 type ServerConfig struct {
 	Host           string

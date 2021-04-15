@@ -11,13 +11,23 @@ import (
 	"time"
 
 	"github.com/MichaelDarr/shelf/backend/internal/config"
+	"github.com/MichaelDarr/shelf/backend/internal/database"
 )
 
 // HTTP is the backend server
 func HTTP(cfg *config.ServerConfig) {
 	ctx := context.Background()
 
-	router := Route(cfg)
+	db, err := database.Open(&cfg.Postgres)
+	if err != nil {
+		log.Fatalf("postgres connection failed: %v", err)
+	}
+
+	if err := db.AutoMigrate(); err != nil {
+		log.Fatalf("gorm auto-migration failed: %v", err)
+	}
+
+	router := Route(cfg, db)
 
 	srv := &http.Server{
 		Addr:         fmt.Sprintf("%s:%d", cfg.Host, cfg.Port),

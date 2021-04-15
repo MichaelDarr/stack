@@ -48,7 +48,8 @@ services:
             main:
                 ipv4_address: 172.16.240.20
     postgres:
-        image: postgres:13.2
+        build:
+          context: ./postgres
         restart: always
         environment:
             POSTGRES_DB: pg
