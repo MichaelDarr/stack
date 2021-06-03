@@ -10,7 +10,6 @@
         "skipLibCheck": true,
         "esModuleInterop": true,
         "experimentalDecorators": true,
-        "allowSyntheticDefaultImports": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "moduleResolution": "node",
@@ -18,8 +17,16 @@
         "baseUrl": ".",
         "paths": {
             "*": ["src/@types"]
-        }
+        },
+        "lib": [
+            "dom"
+        ],
+        "typeRoots": ["./node_modules/@types"],
     },
+    "include": [
+        "./**/*.ts",
+        "./**/*.tsx"
+    ],
     "exclude": [
         "node_modules"
     ]
