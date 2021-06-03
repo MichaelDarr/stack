@@ -2,33 +2,38 @@
   "name": "shelf",
   "version": "0.1.0",
   "description": "Track physical media collections on digital shelves",
-  "main": "src/index.tsx",
+  "main": "webpack.common.js",
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "start": "webpack --config webpack.dev.js && webpack serve --config webpack.dev.js"
   },
-  "author": "Michael Darr",
-  "license": "MIT",
-  "devDependencies": {
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.11.0",
-    "@typescript-eslint/parser": "^4.11.0",
-    "eslint": "^7.16.0",
-    "eslint-plugin-react": "^7.21.5",
-    "source-map-loader": "^1.1.3",
-    "ts-loader": "^8.0.12",
-    "typescript": "^4.1.3",
-    "webpack-cli": "^4.2.0",
-    "webpack-dev-server": "^3.11.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MichaelDarr/shelf.git"
   },
-  "dependencies": {
+  "author": "Michal Darr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MichaelDarr/shelf/issues"
+  },
+  "homepage": "https://github.com/MichaelDarr/shelf#readme",
+  "devDependencies": {
     "@svgr/webpack": "^5.5.0",
-    "copy-webpack-plugin": "^7.0.0",
-    "optimize-css-assets-webpack-plugin": "^5.0.4",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "webpack": "^5.11.0",
-    "webpack-merge": "^5.7.2"
+    "@types/react": "^17.0.9",
+    "@types/react-dom": "^17.0.6",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "copy-webpack-plugin": "^9.0.0",
+    "eslint": "^7.27.0",
+    "eslint-plugin-react": "^7.24.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "source-map-loader": "^3.0.0",
+    "ts-loader": "^9.2.2",
+    "typescript": "^4.3.2",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3"
   }
 }
