@@ -1,18 +1,21 @@
-import { fontFace } from 'typestyle';
+import { style } from 'typestyle';
 
 // All import URLs for loading google fonts
 export const googleFontURLs = [
-    'https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap',
+    'https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap',
 ];
 
-export const sourceSansProLight = fontFace({
+export const sourceSansProLightClass = style({
     fontFamily: 'Source Sans Pro',
-    fontStyle: 'normal',
-    fontWeight: 300
+    fontWeight: 300,
 });
 
-export const sourceSansProRegular = fontFace({
+export const sourceSansProRegularClass = style({
     fontFamily: 'Source Sans Pro',
-    fontStyle: 'normal',
-    fontWeight: 400
+    fontWeight: 400,
+});
+
+export const sourceSansProBoldClass = style({
+    fontFamily: 'Source Sans Pro',
+    fontWeight: 700,
 });

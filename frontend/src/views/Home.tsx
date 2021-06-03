@@ -4,13 +4,15 @@ import { style } from 'typestyle';
 
 import { LogIn } from '../components/LogIn';
 
-const logInGridArea = 'login';
+const area = {
+    login: 'login',
+};
 
 const containerGrid = `
-" .   .                .  " 1fr
-" .   ${logInGridArea} .  " auto
-" .   .                .  " 1fr
-/ 1fr auto             1fr`;
+" .   .             .  " 1fr
+" .   ${area.login} .  " auto
+" .   .             .  " 1fr
+/ 1fr auto         1fr`;
 
 const containerClass = style({
     display: 'grid',
@@ -20,6 +22,6 @@ const containerClass = style({
 
 export const Home: FC = () => (
     <div className={containerClass}>
-        <LogIn style={{ gridArea: logInGridArea }}/>
+        <LogIn style={{ gridArea: area.login }}/>
     </div>
 );
