@@ -17,9 +17,9 @@ func NewUserRepository(db *gorm.DB) *UserRepository {
 }
 
 // CreateUser creates a new user
-func (s *UserRepository) CreateUser(name string) (models.User, error) {
+func (s *UserRepository) CreateUser(email string) (models.User, error) {
 	user := models.User{
-		Name: name,
+		Email: email,
 	}
 	result := s.db.Create(&user)
 	return user, result.Error

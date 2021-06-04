@@ -1,0 +1,12 @@
+BEGIN;
+
+CREATE TABLE IF NOT EXISTS users(
+   id          uuid  DEFAULT uuid_generate_v4(),
+   email       CITEXT NOT NULL,
+   created_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+   updated_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+   deleted_at  TIMESTAMP WITH TIME ZONE,
+   PRIMARY KEY (id)
+);
+
+COMMIT;

@@ -17,14 +17,14 @@ func NewUserService(repo *r.UserRepository) *UserService {
 }
 
 // CreateUser creates a user
-func (s *UserService) CreateUser(name string) (*model.User, error) {
-	user, err := s.repo.CreateUser(name)
+func (s *UserService) CreateUser(email string) (*model.User, error) {
+	user, err := s.repo.CreateUser(email)
 	if err != nil {
 		return nil, err
 	}
 	return &model.User{
-		ID:   user.ID,
-		Name: user.Name,
+		ID:    user.ID,
+		Email: user.Email,
 	}, nil
 }
 
@@ -36,6 +36,6 @@ func (s *UserService) RetrieveUserByID(id uuid.UUID) (*model.User, error) {
 	}
 	return &model.User{
 		ID:   user.ID,
-		Name: user.Name,
+		Email: user.Email,
 	}, nil
 }

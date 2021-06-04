@@ -11,8 +11,8 @@ type Node interface {
 }
 
 type User struct {
-	ID   uuid.UUID `json:"id"`
-	Name string    `json:"name"`
+	ID    uuid.UUID `json:"id"`
+	Email string    `json:"email"`
 }
 
 func (User) IsNode() {}
