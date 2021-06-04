@@ -23,10 +23,6 @@ func HTTP(cfg *config.ServerConfig) {
 		log.Fatalf("postgres connection failed: %v", err)
 	}
 
-	if err := db.AutoMigrate(); err != nil {
-		log.Fatalf("gorm auto-migration failed: %v", err)
-	}
-
 	router := Route(cfg, db)
 
 	srv := &http.Server{

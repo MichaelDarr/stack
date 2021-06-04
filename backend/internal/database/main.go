@@ -2,7 +2,6 @@ package database
 
 import (
 	"github.com/MichaelDarr/shelf/backend/internal/config"
-	"github.com/MichaelDarr/shelf/backend/internal/database/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -23,11 +22,4 @@ func Open(cfg *config.PostgresConfig) (*Connection, error) {
 		DB:     db,
 		Config: cfg,
 	}, nil
-}
-
-// AutoMigrate automatically migrates the GORM schema
-func (g *Connection) AutoMigrate() error {
-	return g.DB.AutoMigrate(
-		&models.User{},
-	)
 }

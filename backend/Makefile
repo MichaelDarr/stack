@@ -4,13 +4,14 @@
 
 APP := backend
 BIN := ./bin
-DESTDIR :=
 GO ?= go
-PREFIX := /usr/local
 
 GOFLAGS :=
 EXTRA_GOFLAGS ?=
 
+MIGRATION_NAME ?= new_migration
+MIGRATION_DIR := $(CURDIR)/db/migrations
+POSTGRESQL_URL := postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(BACKEND_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)
 
 .PHONY: default
 default: $(APP)
@@ -34,3 +35,15 @@ dev: ## run in dev mode (autoreloading enabled, requires gin)
 .PHONY: generate
 generate:
 	$(GO) run -v github.com/99designs/gqlgen
+
+.PHONY: downgrade
+downgrade:
+	migrate -database $(POSTGRESQL_URL) -path $(MIGRATION_DIR) down $(n)
+
+.PHONY: upgrade
+upgrade:
+	migrate -database $(POSTGRESQL_URL) -path $(MIGRATION_DIR) up $(n)
+
+.PHONY: create
+create:
+	migrate create -ext sql -dir $(MIGRATION_DIR) -seq $(MIGRATION_NAME)
