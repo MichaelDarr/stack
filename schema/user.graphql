@@ -1,0 +1,12 @@
+type User implements Node {
+  id: UUID!
+  email: String!
+}
+
+extend type Query {
+  user(id: UUID!): User!
+}
+
+extend type Mutation {
+  userCreate(email: String!): User!
+}

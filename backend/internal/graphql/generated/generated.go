@@ -190,16 +190,20 @@ interface Node {
   id: UUID!
 }
 
-type User implements Node {
+type Query
+
+type Mutation
+`, BuiltIn: false},
+	{Name: "schema/user.graphql", Input: `type User implements Node {
   id: UUID!
   email: String!
 }
 
-type Query {
+extend type Query {
   user(id: UUID!): User!
 }
 
-type Mutation {
+extend type Mutation {
   userCreate(email: String!): User!
 }
 `, BuiltIn: false},
