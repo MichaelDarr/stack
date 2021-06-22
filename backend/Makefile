@@ -26,6 +26,10 @@ build: $(APP)
 $(APP): ## build
 	$(GO) build $(GOFLAGS) -ldflags '-s -w' $(EXTRA_GOFLAGS) -o $(BIN)/$@ ./cmd/$(APP)
 
+.PHONY: build-migrate
+build-migrate:
+	$(GO) build $(GOFLAGS) -ldflags '-s -w' $(EXTRA_GOFLAGS) -o $(BIN)/migrate ./cmd/migrate
+
 .PHONY: dev
 dev: ## run in dev mode (autoreloading enabled, requires gin)
 	go mod download
