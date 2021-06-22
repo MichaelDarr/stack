@@ -83,17 +83,26 @@ func (m Migrate) Create(name string) error {
 
 // Steps migrates by `limit`, up if possitive and down if negative.
 func (m Migrate) Steps(limit int) error {
-	return m.migrate.Steps(limit)
+	if err := m.migrate.Steps(limit); err != nil && err != migrate.ErrNoChange {
+		return err
+	}
+	return nil
 }
 
 // Up migrates all the way up.
 func (m Migrate) Up() error {
-	return m.migrate.Up()
+	if err := m.migrate.Up(); err != nil && err != migrate.ErrNoChange {
+		return err
+	}
+	return nil
 }
 
 // Down migrates all the way down.
 func (m Migrate) Down() error {
-	return m.migrate.Down()
+	if err := m.migrate.Down(); err != nil && err != migrate.ErrNoChange {
+		return err
+	}
+	return nil
 }
 
 // nextSeqVersion constructs the version string of the next migration to be created.
