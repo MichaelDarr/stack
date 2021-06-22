@@ -3,12 +3,12 @@ package resolvers
 import (
 	"github.com/MichaelDarr/shelf/backend/internal/config"
 	"github.com/MichaelDarr/shelf/backend/internal/graphql/generated"
-	us "github.com/MichaelDarr/shelf/backend/internal/user/service"
+	"github.com/MichaelDarr/shelf/backend/internal/user"
 )
 
 type Resolver struct {
 	Config      *config.ServerConfig
-	UserService *us.UserService
+	UserService *user.Service
 }
 
 // Mutation returns generated.MutationResolver implementation.
