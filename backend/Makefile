@@ -9,6 +9,9 @@ GO ?= go
 GOFLAGS :=
 EXTRA_GOFLAGS ?=
 
+GENERATED_RESOLVERS_DIR := $(CURDIR)/internal/resolvers/generated
+GENERATED_GQL_DIR := $(CURDIR)/internal/graphql/generated
+
 MIGRATION_NAME ?= new_migration
 MIGRATION_DIR := $(CURDIR)/db/migrations
 POSTGRESQL_URL := postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)?sslmode=disable
@@ -34,6 +37,8 @@ dev: ## run in dev mode (autoreloading enabled, requires gin)
 
 .PHONY: generate
 generate:
+	rm -rf ${GENERATED_RESOLVERS_DIR}/*
+	rm -rf ${GENERATED_GQL_DIR}/*
 	$(GO) run -v github.com/99designs/gqlgen
 
 .PHONY: downgrade

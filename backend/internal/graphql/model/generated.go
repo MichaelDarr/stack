@@ -16,3 +16,11 @@ type User struct {
 }
 
 func (User) IsNode() {}
+
+type UserCreateInput struct {
+	Email string `json:"email"`
+}
+
+type UserInput struct {
+	ID uuid.UUID `json:"id"`
+}

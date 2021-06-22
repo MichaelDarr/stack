@@ -16,9 +16,16 @@ func NewUserService(repo *r.UserRepository) *UserService {
 	return &UserService{repo}
 }
 
+// CreateUserOptions are options for creating a user.
+type CreateUserOptions struct {
+	Email string
+}
+
 // CreateUser creates a user
-func (s *UserService) CreateUser(email string) (*model.User, error) {
-	user, err := s.repo.CreateUser(email)
+func (s *UserService) CreateUser(opts CreateUserOptions) (*model.User, error) {
+	user, err := s.repo.CreateUser(r.CreateUserOptions{
+		Email: opts.Email,
+	})
 	if err != nil {
 		return nil, err
 	}

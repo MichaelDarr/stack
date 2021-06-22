@@ -14,12 +14,12 @@ exec:
 
 # Where should any generated models go?
 model:
-  filename: internal/graphql/model/models_gen.go
+  filename: internal/graphql/model/generated.go
   package: model
 
 # Where should the resolver implementations go?
 resolver:
-  filename: internal/resolvers/generated/models_gen.go
+  filename: internal/resolvers/generated/generated.go
   package: generated
 
 # Optional: turn on use `gqlgen:"fieldName"` tags in your models

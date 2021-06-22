@@ -3,10 +3,18 @@ type User implements Node {
   email: String!
 }
 
+input UserCreateInput {
+  email: String!
+}
+
+input UserInput {
+  id: UUID!
+}
+
 extend type Query {
-  user(id: UUID!): User!
+  user(input: UserInput!): User!
 }
 
 extend type Mutation {
-  userCreate(email: String!): User!
+  userCreate(input: UserCreateInput!): User!
 }
