@@ -49,6 +49,10 @@ downgrade:
 upgrade:
 	migrate -database $(POSTGRESQL_URL) -path $(MIGRATION_DIR) up $(n)
 
+.PHONY: force
+force:
+	migrate -database $(POSTGRESQL_URL) -path $(MIGRATION_DIR) force $(v)
+
 .PHONY: create
 create:
 	migrate create -ext sql -dir $(MIGRATION_DIR) -seq $(MIGRATION_NAME)
