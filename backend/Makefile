@@ -15,10 +15,6 @@ EXTRA_GOFLAGS ?=
 GENERATED_RESOLVERS_DIR := $(CURDIR)/internal/resolvers/generated
 GENERATED_GQL_DIR := $(CURDIR)/internal/graphql/generated
 
-MIGRATION_NAME ?= new_migration
-MIGRATION_DIR := $(CURDIR)/db/migrations
-POSTGRESQL_URL := postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)?sslmode=disable
-
 .PHONY: default
 default: $(APP)
 
