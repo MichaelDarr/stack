@@ -81,6 +81,21 @@ func (m Migrate) Create(name string) error {
 	return nil
 }
 
+// Steps migrates by `limit`, up if possitive and down if negative.
+func (m Migrate) Steps(limit int) error {
+	return m.migrate.Steps(limit)
+}
+
+// Up migrates all the way up.
+func (m Migrate) Up() error {
+	return m.migrate.Up()
+}
+
+// Down migrates all the way down.
+func (m Migrate) Down() error {
+	return m.migrate.Down()
+}
+
 // nextSeqVersion constructs the version string of the next migration to be created.
 // Adapted from this non-exported golang-migrate function:
 // https://github.com/golang-migrate/migrate/blob/511ae9f5b6bea5190b340243169359455281458b/internal/cli/commands.go#L23

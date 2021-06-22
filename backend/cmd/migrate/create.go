@@ -25,7 +25,6 @@ var createCmd = &cobra.Command{
 		if len(args) > 0 {
 			name = args[0]
 		}
-		fmt.Println("creating migration:", name)
 		if err := m.Create(name); err != nil {
 			fmt.Printf("Failed to create migration: %s", err)
 			return
