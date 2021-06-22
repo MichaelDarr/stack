@@ -6,14 +6,20 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
-// migrationSequenceLength is the number of digits included in the prefix of created migrations.
-const migrationSequenceLength = 6
+const (
+	lockTimeout             = time.Second * 15
+	migrationSequenceLength = 6
+	prefetch                = uint(10)
+)
+
+var migrationLog = &Log{}
 
 // Migrate interacts with database migrations.
 type Migrate struct {
@@ -29,10 +35,19 @@ func New(migrationFilepath string, databaseURL string) (*Migrate, error) {
 	if err != nil {
 		return nil, err
 	}
+	migrate.LockTimeout = lockTimeout
+	migrate.Log = migrationLog
+	migrate.PrefetchMigrations = prefetch
 	return &Migrate{
 		migrate:  migrate,
 		filePath: cleanFilepath,
 	}, nil
+}
+
+// Close closes the database connection.
+func (m Migrate) Close() error {
+	_, err := m.migrate.Close()
+	return err
 }
 
 // Create creates a migration.
