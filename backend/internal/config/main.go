@@ -21,13 +21,15 @@ func New() ServerConfig {
 		Port:           GetRequiredIntEnv("BACKEND_PORT"),
 		Scheme:         GetRequiredEnv("BACKEND_SCHEME"),
 		Postgres: PostgresConfig{
-			Debug:    GetRequiredBoolEnv("BACKEND_POSTGRES_DEBUG"),
-			Host:     GetRequiredEnv("POSTGRES_HOST"),
-			Name:     GetRequiredEnv("POSTGRES_DB"),
-			Password: GetRequiredEnv("POSTGRES_PASSWORD"),
-			Port:     GetRequiredIntEnv("POSTGRES_PORT"),
-			Schema:   GetRequiredEnv("POSTGRES_SCHEMA"),
-			User:     GetRequiredEnv("POSTGRES_USER"),
+			Debug:             GetRequiredBoolEnv("BACKEND_POSTGRES_DEBUG"),
+			Host:              GetRequiredEnv("POSTGRES_HOST"),
+			Name:              GetRequiredEnv("POSTGRES_DB"),
+			Password:          GetRequiredEnv("POSTGRES_PASSWORD"),
+			Port:              GetRequiredIntEnv("POSTGRES_PORT"),
+			Schema:            GetRequiredEnv("POSTGRES_SCHEMA"),
+			User:              GetRequiredEnv("POSTGRES_USER"),
+			MigrationFilepath: GetRequiredEnv("MIGRATION_FILEPATH"),
+			SSLEnabled:        GetBoolEnv("POSTGRES_SSL_ENABLED", false),
 		},
 	}
 }

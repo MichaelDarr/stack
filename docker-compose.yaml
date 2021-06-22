@@ -33,6 +33,7 @@ services:
             BACKEND_POSTGRES_DEBUG: 'TRUE'
             BACKEND_SCHEME: http
             FRONTEND_PORT: 8888
+            MIGRATION_FILEPATH: /mnt/db/migrations
             POSTGRES_DB: pg
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: pass

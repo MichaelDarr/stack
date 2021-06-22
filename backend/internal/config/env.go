@@ -6,7 +6,17 @@ import (
 	"strconv"
 )
 
-// GetRequiredEnv returns an environment variable or panics if not present
+// GetBoolEnv returns an boolean environment variable with a fallback if not found or invalid.
+func GetBoolEnv(key string, fallback bool) bool {
+	if val, ok := os.LookupEnv(key); ok {
+		if boolVal, err := strconv.ParseBool(val); err == nil {
+			return boolVal
+		}
+	}
+	return fallback
+}
+
+// GetRequiredEnv returns an environment variable or panics if not present.
 func GetRequiredEnv(key string) string {
 	val := os.Getenv(key)
 	if val == "" {
@@ -15,7 +25,7 @@ func GetRequiredEnv(key string) string {
 	return val
 }
 
-// GetRequiredBoolEnv returns an environment variable or panics if not present or not a boolean
+// GetRequiredBoolEnv returns an environment variable or panics if not present or not a boolean.
 func GetRequiredBoolEnv(key string) bool {
 	val := GetRequiredEnv(key)
 	boolVal, err := strconv.ParseBool(val)
@@ -25,7 +35,7 @@ func GetRequiredBoolEnv(key string) bool {
 	return boolVal
 }
 
-// GetRequiredIntEnv returns an environment variable or panics if not present or not an integer
+// GetRequiredIntEnv returns an environment variable or panics if not present or not an integer.
 func GetRequiredIntEnv(key string) int {
 	val := GetRequiredEnv(key)
 	intVal, err := strconv.Atoi(val)
