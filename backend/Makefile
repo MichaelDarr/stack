@@ -3,7 +3,10 @@
 #
 
 APP := backend
+MIGRATE_APP := migrate
 BIN := ./bin
+DESTDIR :=
+PREFIX := /usr/local
 GO ?= go
 
 GOFLAGS :=
@@ -26,13 +29,11 @@ build: $(APP)
 $(APP): ## build
 	$(GO) build $(GOFLAGS) -ldflags '-s -w' $(EXTRA_GOFLAGS) -o $(BIN)/$@ ./cmd/$(APP)
 
-.PHONY: build-migrate
-build-migrate:
-	$(GO) build $(GOFLAGS) -ldflags '-s -w' $(EXTRA_GOFLAGS) -o $(BIN)/migrate ./cmd/migrate
-
 .PHONY: dev
 dev: ## run in dev mode (autoreloading enabled, requires gin)
 	go mod download
+	make build-migrate
+	make install-migrate
 	gin --immediate \
 		--bin=$(BIN)/$(APP) \
 		--build ./cmd/$(APP) \
@@ -45,18 +46,15 @@ generate:
 	rm -rf ${GENERATED_GQL_DIR}/*
 	$(GO) run -v github.com/99designs/gqlgen
 
-.PHONY: downgrade
-downgrade:
-	migrate -database $(POSTGRESQL_URL) -path $(MIGRATION_DIR) down $(n)
+.PHONY: build-migrate
+build-migrate:
+	$(GO) build $(GOFLAGS) -ldflags '-s -w' $(EXTRA_GOFLAGS) -o $(BIN)/$(MIGRATE_APP) ./cmd/$(MIGRATE_APP)
 
-.PHONY: upgrade
-upgrade:
-	migrate -database $(POSTGRESQL_URL) -path $(MIGRATION_DIR) up $(n)
+.PHONY: install-migrate
+install-migrate:
+	install -d $(DESTDIR)$(PREFIX)/bin
+	install -m 0755 $(BIN)/$(MIGRATE_APP) $(DESTDIR)$(PREFIX)/bin/$(MIGRATE_APP)
 
-.PHONY: force
-force:
-	migrate -database $(POSTGRESQL_URL) -path $(MIGRATION_DIR) force $(v)
-
-.PHONY: create
-create:
-	migrate create -ext sql -dir $(MIGRATION_DIR) -seq $(MIGRATION_NAME)
+.PHONY: uninstall-migrate
+uninstall-migrate:
+	rm -f $(DESTDIR)$(PREFIX)/bin/$(BIN)
