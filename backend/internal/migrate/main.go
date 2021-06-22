@@ -96,6 +96,19 @@ func (m Migrate) Create(name string) error {
 	return nil
 }
 
+// Down migrates all the way down.
+func (m Migrate) Down() error {
+	if err := m.migrate.Down(); err != nil && err != migrate.ErrNoChange {
+		return err
+	}
+	return nil
+}
+
+// Force sets a migration version and sets the dirty state to false.
+func (m Migrate) Force(version int) error {
+	return m.migrate.Force(version)
+}
+
 // Steps migrates by `limit`, up if possitive and down if negative.
 func (m Migrate) Steps(limit int) error {
 	if err := m.migrate.Steps(limit); err != nil && err != migrate.ErrNoChange {
@@ -107,14 +120,6 @@ func (m Migrate) Steps(limit int) error {
 // Up migrates all the way up.
 func (m Migrate) Up() error {
 	if err := m.migrate.Up(); err != nil && err != migrate.ErrNoChange {
-		return err
-	}
-	return nil
-}
-
-// Down migrates all the way down.
-func (m Migrate) Down() error {
-	if err := m.migrate.Down(); err != nil && err != migrate.ErrNoChange {
 		return err
 	}
 	return nil
