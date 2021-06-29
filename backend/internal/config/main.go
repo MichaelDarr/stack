@@ -15,7 +15,6 @@ func New() ServerConfig {
 	// Set up the stripe key early on, so everything is nicely preconfigured
 	// when it's used in other parts of the app.
 	return ServerConfig{
-		Host:           GetRequiredEnv("BACKEND_HOST"),
 		GQLPath:        GetRequiredEnv("BACKEND_GQL_PATH"),
 		PlaygroundPath: GetRequiredEnv("BACKEND_PLAYGROUND_PATH"),
 		Port:           GetRequiredIntEnv("BACKEND_PORT"),

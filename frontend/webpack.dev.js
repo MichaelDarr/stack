@@ -11,7 +11,7 @@ module.exports = merge(common, {
         compress: true,
         contentBase: path.resolve(__dirname, 'dist'),
         historyApiFallback: true,
-        host: process.env['FRONTEND_HOST'] || '0.0.0.0',
+        host: '0.0.0.0',
         hot: true,
         overlay: {
             errors: true,

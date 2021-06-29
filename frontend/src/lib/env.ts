@@ -1,5 +1,3 @@
-import { Tier } from './types';
-
 const getEnv = (varString: string): string | null => {
     const extractedVar = process.env[varString];
     if (!extractedVar) {
@@ -45,12 +43,6 @@ export const Env = {
     backendHost: getRequiredEnv('BACKEND_HOST'),
     backendPort: getRequiredNumericEnv('BACKEND_PORT'),
     backendPath: getRequiredEnv('BACKEND_GQL_PATH'),
-    tier: {
-        isDevelopment: getRequiredEnv('TIER') === Tier.Development,
-        isProduction: getRequiredEnv('TIER') === Tier.Production,
-        isStaging: getRequiredEnv('TIER') === Tier.Staging,
-        value: getRequiredEnv('TIER'),
-    }
 };
 
 export const backendURL = (): string => (

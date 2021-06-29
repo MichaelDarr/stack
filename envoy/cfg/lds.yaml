@@ -1,0 +1,44 @@
+resources:
+- "@type": type.googleapis.com/envoy.config.listener.v3.Listener
+  name: backend_listener
+  address:
+    socket_address:
+      address: 0.0.0.0
+      port_value: 3333
+  filter_chains:
+  - filters:
+    - name: envoy.tcp_proxy
+      typed_config:
+        "@type": type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy
+        stat_prefix: tcp
+        cluster: backend_cluster
+- "@type": type.googleapis.com/envoy.config.listener.v3.Listener
+  name: frontend_listener
+  address:
+    socket_address:
+      address: 0.0.0.0
+      port_value: 8888
+  filter_chains:
+  - filters:
+    - name: envoy.tcp_proxy
+      typed_config:
+        "@type": type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy
+        stat_prefix: tcp
+        cluster: frontend_cluster
+- "@type": type.googleapis.com/envoy.config.listener.v3.Listener
+  name: postgres_listener
+  address:
+    socket_address:
+      address: 0.0.0.0
+      port_value: 5432
+  filter_chains:
+  - filters:
+    - name: envoy.filters.network.postgres_proxy
+      typed_config:
+        "@type": type.googleapis.com/envoy.extensions.filters.network.postgres_proxy.v3alpha.PostgresProxy
+        stat_prefix: postgres
+    - name: envoy.tcp_proxy
+      typed_config:
+        "@type": type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy
+        stat_prefix: tcp
+        cluster: postgres_cluster

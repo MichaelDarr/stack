@@ -1,0 +1,40 @@
+resources:
+- "@type": type.googleapis.com/envoy.config.cluster.v3.Cluster
+  name: backend_cluster
+  connect_timeout: 1s
+  type: strict_dns
+  load_assignment:
+    cluster_name: backend_cluster
+    endpoints:
+    - lb_endpoints:
+      - endpoint:
+          address:
+            socket_address:
+              address: backend
+              port_value: 3333
+- "@type": type.googleapis.com/envoy.config.cluster.v3.Cluster
+  name: frontend_cluster
+  connect_timeout: 1s
+  type: strict_dns
+  load_assignment:
+    cluster_name: frontend_cluster
+    endpoints:
+    - lb_endpoints:
+      - endpoint:
+          address:
+            socket_address:
+              address: frontend
+              port_value: 8888
+- "@type": type.googleapis.com/envoy.config.cluster.v3.Cluster
+  name: postgres_cluster
+  connect_timeout: 1s
+  type: strict_dns
+  load_assignment:
+    cluster_name: postgres_cluster
+    endpoints:
+    - lb_endpoints:
+      - endpoint:
+          address:
+            socket_address:
+              address: postgres
+              port_value: 5432

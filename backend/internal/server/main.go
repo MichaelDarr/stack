@@ -26,7 +26,7 @@ func HTTP(cfg *config.ServerConfig) {
 	router := Route(cfg, db)
 
 	srv := &http.Server{
-		Addr:         fmt.Sprintf("%s:%d", cfg.Host, cfg.Port),
+		Addr:         fmt.Sprintf(":%d", cfg.Port),
 		WriteTimeout: time.Second * 10,
 		ReadTimeout:  time.Second * 10,
 		IdleTimeout:  time.Second * 60,

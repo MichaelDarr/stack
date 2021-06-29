@@ -3,16 +3,12 @@ services:
     frontend:
         build:
             context: ./frontend
-        ports:
-            - "8888:8888"
         environment:
             BACKEND_GQL_PATH: /graphql
-            BACKEND_HOST: 172.16.240.20
+            BACKEND_HOST: envoy
             BACKEND_PORT: 3333
             BACKEND_SCHEME: http
-            FRONTEND_HOST: 172.16.240.10
             FRONTEND_PORT: 8888
-            TIER: development
         depends_on:
             - "backend"
         volumes:
@@ -20,36 +16,43 @@ services:
             - "./schema/:/mnt/schema"
         working_dir: /mnt
         networks:
-            main:
-                ipv4_address: 172.16.240.10
+            - main
     backend:
         build:
             context: ./backend
         environment:
             BACKEND_GQL_PATH: /graphql
-            BACKEND_HOST: 172.16.240.20
             BACKEND_PLAYGROUND_PATH: /playground
             BACKEND_PORT: 3333
             BACKEND_POSTGRES_DEBUG: 'TRUE'
             BACKEND_SCHEME: http
-            FRONTEND_PORT: 8888
             MIGRATION_FILEPATH: /mnt/db/migrations
             POSTGRES_DB: pg
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: pass
-            POSTGRES_HOST: 172.16.240.30
+            POSTGRES_HOST: envoy
             POSTGRES_PORT: 5432
             POSTGRES_SCHEMA: public
-            TIER: development
-        ports:
-            - "3333:3333"
         volumes:
             - "./backend/:/mnt"
             - "./schema/:/mnt/schema"
         working_dir: /mnt
         networks:
-            main:
-                ipv4_address: 172.16.240.20
+            - main
+    envoy:
+        build:
+            context: ./envoy
+        ports:
+            - "3333:3333"
+            - "5432:5432"
+            - "8888:8888"
+            - "9901:9901"
+            - "10000:10000"
+        volumes:
+            - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml
+            - ./envoy/cfg:/mnt/cfg
+        networks:
+            - main
     postgres:
         build:
           context: ./postgres
@@ -58,23 +61,17 @@ services:
             POSTGRES_DB: pg
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: pass
-            POSTGRES_HOST: 172.16.240.30
             POSTGRES_PORT: 5432
             POSTGRES_SCHEMA: public
-        ports:
-            - "5432:5432"
         volumes:
             - "pg_data:/var/lib/postgresql/data"
         networks:
-            main:
-                ipv4_address: 172.16.240.30
+            - main
 
 volumes:
     pg_data:
 
 networks:
     main:
-        ipam:
-            driver: default
-            config:
-                - subnet: "172.16.240.0/24"
+        name: shelf-net
+        driver: bridge
