@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option go_package = "github.com/MichaelDarr/shelf/auth/proto";
+
+package auth;
+
+// Interface exported by the server.
+service Auth {
+  rpc GetSomething(Some) returns (Thing) {}
+}
+
+message Some {
+  int32 x = 1;
+  int32 y = 2;
+}
+
+message Thing {
+  string name = 1;
+}

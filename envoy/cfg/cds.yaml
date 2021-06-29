@@ -1,5 +1,18 @@
 resources:
 - "@type": type.googleapis.com/envoy.config.cluster.v3.Cluster
+  name: auth_cluster
+  connect_timeout: 1s
+  type: strict_dns
+  load_assignment:
+    cluster_name: auth_cluster
+    endpoints:
+    - lb_endpoints:
+      - endpoint:
+          address:
+            socket_address:
+              address: auth
+              port_value: 3334
+- "@type": type.googleapis.com/envoy.config.cluster.v3.Cluster
   name: backend_cluster
   connect_timeout: 1s
   type: strict_dns
