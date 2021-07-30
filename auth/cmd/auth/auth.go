@@ -8,5 +8,7 @@ import (
 func main() {
 	cfg := config.New()
 
-	server.GRPC(&cfg)
+	go server.GRPC(&cfg)
+
+	select {}
 }
