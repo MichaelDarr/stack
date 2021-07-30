@@ -2,11 +2,9 @@ package config
 
 // ServerConfig defines the configuration for the server
 type ServerConfig struct {
-	Host           string
 	GQLPath        string
 	PlaygroundPath string
 	Port           int
-	Scheme         string
 	Postgres       PostgresConfig
 }
 
@@ -18,7 +16,6 @@ func New() ServerConfig {
 		GQLPath:        GetRequiredEnv("BACKEND_GQL_PATH"),
 		PlaygroundPath: GetRequiredEnv("BACKEND_PLAYGROUND_PATH"),
 		Port:           GetRequiredIntEnv("BACKEND_PORT"),
-		Scheme:         GetRequiredEnv("BACKEND_SCHEME"),
 		Postgres: PostgresConfig{
 			Debug:             GetRequiredBoolEnv("BACKEND_POSTGRES_DEBUG"),
 			Host:              GetRequiredEnv("POSTGRES_HOST"),

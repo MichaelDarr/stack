@@ -2,9 +2,11 @@ resources:
 - "@type": type.googleapis.com/envoy.config.cluster.v3.Cluster
   name: auth_cluster
   connect_timeout: 1s
-  type: strict_dns
+  type: logical_dns
+  http2_protocol_options: {}
+  lb_policy: round_robin
   load_assignment:
-    cluster_name: auth_cluster
+    cluster_name: cluster_0
     endpoints:
     - lb_endpoints:
       - endpoint:

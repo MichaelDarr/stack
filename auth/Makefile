@@ -27,10 +27,3 @@ dev: ## run in dev mode (autoreloading enabled, requires gin)
 		--build ./cmd/$(APP) \
 		--buildArgs="$(GOFLAGS) $(EXTRA_GOFLAGS)" \
 		run 
-
-.PHONY: gen
-gen:
-	cd $(CURDIR)
-	protoc --go_out=./ --go_opt=paths=source_relative \
-		--go-grpc_out=. --go-grpc_opt=paths=source_relative \
-		proto/auth.proto

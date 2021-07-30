@@ -3,8 +3,11 @@ services:
     auth:
         build:
             context: ./auth
+        environment:
+            AUTH_PORT: 3334
         volumes:
             - "./auth/:/mnt"
+            - "./proto/:/mnt/proto"
         working_dir: /mnt
         networks:
             - main
@@ -12,8 +15,11 @@ services:
         build:
             context: ./frontend
         environment:
+            AUTH_HOST: localhost
+            AUTH_PORT: 3334
+            AUTH_SCHEME: http
             BACKEND_GQL_PATH: /graphql
-            BACKEND_HOST: envoy
+            BACKEND_HOST: localhost
             BACKEND_PORT: 3333
             BACKEND_SCHEME: http
             FRONTEND_PORT: 8888
@@ -22,6 +28,7 @@ services:
         volumes:
             - "./frontend:/mnt"
             - "./schema/:/mnt/schema"
+            - "./proto/:/mnt/proto"
         working_dir: /mnt
         networks:
             - main

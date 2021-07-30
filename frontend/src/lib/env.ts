@@ -39,12 +39,19 @@ const getRequiredNumericEnv = (varString: string): number => {
 };
 
 export const Env = {
-    backendScheme: getRequiredEnv('BACKEND_SCHEME'),
+    authHost: getRequiredEnv('AUTH_HOST'),
+    authPort: getRequiredNumericEnv('AUTH_PORT'),
+    authScheme: getRequiredEnv('AUTH_SCHEME'),
     backendHost: getRequiredEnv('BACKEND_HOST'),
     backendPort: getRequiredNumericEnv('BACKEND_PORT'),
     backendPath: getRequiredEnv('BACKEND_GQL_PATH'),
+    backendScheme: getRequiredEnv('BACKEND_SCHEME'),
 };
 
-export const backendURL = (): string => (
+export const authURL = (
+    `${Env.authScheme}://${Env.authHost}:${Env.authPort}`
+)
+
+export const backendURL = (
     `${Env.backendScheme}://${Env.backendHost}:${Env.backendPort}${Env.backendPath}`
 );
