@@ -6,9 +6,9 @@ import (
 	"log"
 	"net"
 
-	"google.golang.org/grpc"
-	pb "github.com/MichaelDarr/shelf/auth/proto/auth"
 	"github.com/MichaelDarr/shelf/auth/internal/config"
+	pb "github.com/MichaelDarr/shelf/auth/proto/auth"
+	"google.golang.org/grpc"
 )
 
 // GRPC starts the grpc server.
@@ -33,5 +33,5 @@ func newGrpcServer() *grpcServer {
 
 // GetSomething gets something.
 func (g *grpcServer) GetSomething(ctx context.Context, some *pb.Some) (*pb.Thing, error) {
-	return nil, nil
+	return &pb.Thing{Name: fmt.Sprintf("%d %d", some.X, some.Y)}, nil
 }
