@@ -1,7 +1,7 @@
 package database
 
 import (
-	"github.com/MichaelDarr/shelf/backend/internal/config"
+	"github.com/MichaelDarr/stack/backend/internal/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

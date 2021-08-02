@@ -1,5 +1,5 @@
 #
-# /home/michael/projects/shelf/backend
+# github.com/MichaelDarr/stack/backend
 #
 
 APP := backend

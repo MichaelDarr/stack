@@ -89,5 +89,5 @@ volumes:
 
 networks:
     main:
-        name: shelf-net
+        name: stack-net
         driver: bridge

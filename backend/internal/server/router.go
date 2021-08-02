@@ -3,8 +3,8 @@ package server
 import (
 	"net/http"
 
-	"github.com/MichaelDarr/shelf/backend/internal/config"
-	"github.com/MichaelDarr/shelf/backend/internal/database"
+	"github.com/MichaelDarr/stack/backend/internal/config"
+	"github.com/MichaelDarr/stack/backend/internal/database"
 	"github.com/rs/cors"
 )
 

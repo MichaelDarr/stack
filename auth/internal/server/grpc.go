@@ -6,8 +6,8 @@ import (
 	"log"
 	"net"
 
-	"github.com/MichaelDarr/shelf/auth/internal/config"
-	pb "github.com/MichaelDarr/shelf/auth/proto/auth"
+	"github.com/MichaelDarr/stack/auth/internal/config"
+	pb "github.com/MichaelDarr/stack/auth/proto/auth"
 	"google.golang.org/grpc"
 )
 

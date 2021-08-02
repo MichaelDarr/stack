@@ -1,5 +1,5 @@
 #
-# /home/michael/projects/shelf/auth
+# github.com/MichaelDarr/stack/auth
 #
 
 APP := auth

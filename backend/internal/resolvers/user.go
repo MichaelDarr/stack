@@ -3,8 +3,8 @@ package resolvers
 import (
 	"context"
 
-	"github.com/MichaelDarr/shelf/backend/internal/graphql/model"
-	"github.com/MichaelDarr/shelf/backend/internal/user"
+	"github.com/MichaelDarr/stack/backend/internal/graphql/model"
+	"github.com/MichaelDarr/stack/backend/internal/user"
 )
 
 // UserCreate creates a user.

@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/MichaelDarr/shelf/backend/internal/config"
-	"github.com/MichaelDarr/shelf/backend/internal/migrate"
+	"github.com/MichaelDarr/stack/backend/internal/config"
+	"github.com/MichaelDarr/stack/backend/internal/migrate"
 	"github.com/spf13/cobra"
 )
 

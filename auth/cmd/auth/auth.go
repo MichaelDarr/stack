@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/MichaelDarr/shelf/auth/internal/config"
-	"github.com/MichaelDarr/shelf/auth/internal/server"
+	"github.com/MichaelDarr/stack/auth/internal/config"
+	"github.com/MichaelDarr/stack/auth/internal/server"
 )
 
 func main() {

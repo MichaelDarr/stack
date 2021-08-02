@@ -1,5 +1,5 @@
 #
-# /home/michael/projects/shelf
+# github.com/MichaelDarr/stack
 #
 
 .PHONY: proto

@@ -3,8 +3,8 @@ package userRepository
 import (
 	"fmt"
 
-	"github.com/MichaelDarr/shelf/backend/internal/database/models"
-	"github.com/MichaelDarr/shelf/backend/internal/user"
+	"github.com/MichaelDarr/stack/backend/internal/database/models"
+	"github.com/MichaelDarr/stack/backend/internal/user"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )

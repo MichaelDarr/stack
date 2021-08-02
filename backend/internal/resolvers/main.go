@@ -1,9 +1,9 @@
 package resolvers
 
 import (
-	"github.com/MichaelDarr/shelf/backend/internal/config"
-	"github.com/MichaelDarr/shelf/backend/internal/graphql/generated"
-	"github.com/MichaelDarr/shelf/backend/internal/user"
+	"github.com/MichaelDarr/stack/backend/internal/config"
+	"github.com/MichaelDarr/stack/backend/internal/graphql/generated"
+	"github.com/MichaelDarr/stack/backend/internal/user"
 )
 
 type Resolver struct {

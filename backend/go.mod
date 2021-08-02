@@ -1,4 +1,4 @@
-module github.com/MichaelDarr/shelf/backend
+module github.com/MichaelDarr/stack/backend
 
 go 1.15
 

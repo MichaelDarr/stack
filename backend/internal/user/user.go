@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/MichaelDarr/shelf/backend/internal/graphql/model"
+	"github.com/MichaelDarr/stack/backend/internal/graphql/model"
 	"github.com/google/uuid"
 )
 

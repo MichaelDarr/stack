@@ -1,6 +1,6 @@
-# shelf
+# stack
 
-Track physical media collections on digital shelves
+A full-stack engineering testbed
 
 ## Local Development
 
@@ -12,8 +12,9 @@ Track physical media collections on digital shelves
 After running the following commands, visit [localhost:8888](http://localhost:8888/) in your browser.
 
 ```sh
-$ git clone git@github.com:MichaelDarr/shelf.git
-$ cd shelf
+$ git clone git@github.com:MichaelDarr/stack.git
+$ cd stack
+$ make proto
 $ docker-compose up
 ```
 

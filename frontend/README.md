@@ -1,4 +1,4 @@
-# Shelf Frontend
+# Frontend
 
 ## Directory Structure
 

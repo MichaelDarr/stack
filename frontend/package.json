@@ -1,7 +1,7 @@
 {
-  "name": "shelf",
+  "name": "stack",
   "version": "0.1.0",
-  "description": "Track physical media collections on digital shelves",
+  "description": "A full-stack engineering testbed",
   "main": "webpack.common.js",
   "scripts": {
     "build": "webpack --config webpack.prod.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MichaelDarr/shelf.git"
+    "url": "git+https://github.com/MichaelDarr/stack.git"
   },
   "author": "Michal Darr",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MichaelDarr/shelf/issues"
+    "url": "https://github.com/MichaelDarr/stack/issues"
   },
-  "homepage": "https://github.com/MichaelDarr/shelf#readme",
+  "homepage": "https://github.com/MichaelDarr/stack#readme",
   "devDependencies": {
     "@svgr/webpack": "^5.5.0",
     "@types/react": "^17.0.9",

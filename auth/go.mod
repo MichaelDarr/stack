@@ -1,4 +1,4 @@
-module github.com/MichaelDarr/shelf/auth
+module github.com/MichaelDarr/stack/auth
 
 go 1.16
 

@@ -1,6 +1,6 @@
 node:
-  cluster: shelf-cluster
-  id: shelf-id
+  cluster: stack-cluster
+  id: stack-id
 
 dynamic_resources:
   cds_config:
