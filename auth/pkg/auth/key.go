@@ -1,62 +1,68 @@
 package auth
 
 import (
-	"crypto/rand"
-	"crypto/rsa"
-	"time"
+	"errors"
+	"fmt"
 
 	"github.com/golang-jwt/jwt"
 )
 
-// Key generates and validates JSON web tokens.
-type Key struct {
-	privateKey *rsa.PrivateKey
+// Key is a JSON web key.
+type Key interface {
+	// GetSigningMethod gets the signing method.
+	GetSigningMethod() jwt.SigningMethod
+	// GetJWK gets the JSON web key which will be marshalled to JSON.
+	GetJWK() interface{}
+	// GetKeyID gets the key identifier.
+	GetKeyID() string
+	// GetVerificationKey gets the JSON web token verification key.
+	GetVerificationKey() interface{}
+	// Sign signs a JSON web tokens.
+	SignToken(token *jwt.Token) (string, error)
 }
 
-// GenerateRandomKey generates a random Key.
-func GenerateRandomKey() (*Key, error) {
-	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
-	if err != nil {
-		return nil, err
-	}
-	return &Key{
-		privateKey,
-	}, nil
+// KeySet is a JSON web key set.
+type KeySet struct {
+	keys []Key
 }
 
-// ClaimsOptions are options for creating a JSON web token.
-type ClaimsOptions struct {
-	Lifespan time.Duration
-	Id       string
-}
-
-// NewClaims generates new claims for a JSON web token.
-func (k Key) NewClaims(opts ClaimsOptions) *Claims {
-	return &Claims{
-		jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(opts.Lifespan).Unix(),
-			Id:        opts.Id,
-			IssuedAt:  time.Now().Unix(),
-		},
-	}
-}
-
-// NewToken creates a new JSON web token with claims.
-func (k Key) NewToken(opts ClaimsOptions) *Token {
-	claims := k.NewClaims(opts)
-	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
-	return &Token{
-		token:       token,
-		keyProvider: k,
-	}
-}
-
-// SignToken signs a JSON web tokens.
-func (k Key) SignToken(token *jwt.Token) (string, error) {
-	return token.SignedString(k.privateKey)
+// NewKeySet creates a new JSON web key set.
+func NewKeySet(keys []Key) *KeySet {
+	return &KeySet{keys: keys}
 }
 
 // GetVerificationKey gets the JSON web token verification key.
-func (k Key) GetVerificationKey(token *jwt.Token) (interface{}, error) {
-	return &k.privateKey.PublicKey, nil
+func (ks KeySet) GetVerificationKey(token *jwt.Token) (interface{}, error) {
+	tokenKeyIDHeader, ok := token.Header["kid"]
+	if !ok {
+		return nil, errors.New("token header 'kid' missing")
+	}
+	tokenKeyID := fmt.Sprintf("%v", tokenKeyIDHeader)
+	for _, key := range ks.keys {
+		if tokenKeyID == key.GetKeyID() {
+			return key.GetVerificationKey(), nil
+		}
+	}
+	return nil, fmt.Errorf("token key id not found in set: %v", tokenKeyID)
+}
+
+// NewToken creates a new JSON web token with claims.
+func (ks KeySet) NewToken(claimOpts ClaimsOptions) (*Token, error) {
+	if len(ks.keys) == 0 {
+		return nil, errors.New("token set empty")
+	}
+	key := ks.keys[0]
+	return NewToken(key, claimOpts), nil
+}
+
+// ParseToken parses and validates a JSON web token.
+func (keySet KeySet) ParseToken(tokenString string) (*Token, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, keySet.GetVerificationKey)
+	if err != nil {
+		return nil, err
+	}
+	if !token.Valid {
+		return nil, errors.New("invalid token")
+	}
+	return &Token{token: token}, nil
 }

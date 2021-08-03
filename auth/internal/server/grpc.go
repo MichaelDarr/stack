@@ -16,9 +16,9 @@ type GRPC struct {
 }
 
 // NewGRPC creates an auth grpc server.
-func NewGRPC(key *auth.Key) *GRPC {
+func NewGRPC(keySet *auth.KeySet) *GRPC {
 	grpcServer := grpc.NewServer()
-	authServer := &AuthServer{key: key}
+	authServer := &AuthServer{keySet: keySet}
 	pb.RegisterAuthServer(grpcServer, authServer)
 
 	return &GRPC{
