@@ -35,44 +35,84 @@ export class AuthClient {
     this.options_ = options;
   }
 
-  methodInfoGetSomething = new grpcWeb.AbstractClientBase.MethodInfo(
-    proto_auth_auth_pb.Thing,
-    (request: proto_auth_auth_pb.Some) => {
+  methodInfoGetToken = new grpcWeb.AbstractClientBase.MethodInfo(
+    proto_auth_auth_pb.GetTokenResponse,
+    (request: proto_auth_auth_pb.GetTokenRequest) => {
       return request.serializeBinary();
     },
-    proto_auth_auth_pb.Thing.deserializeBinary
+    proto_auth_auth_pb.GetTokenResponse.deserializeBinary
   );
 
-  getSomething(
-    request: proto_auth_auth_pb.Some,
-    metadata: grpcWeb.Metadata | null): Promise<proto_auth_auth_pb.Thing>;
+  getToken(
+    request: proto_auth_auth_pb.GetTokenRequest,
+    metadata: grpcWeb.Metadata | null): Promise<proto_auth_auth_pb.GetTokenResponse>;
 
-  getSomething(
-    request: proto_auth_auth_pb.Some,
+  getToken(
+    request: proto_auth_auth_pb.GetTokenRequest,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.Error,
-               response: proto_auth_auth_pb.Thing) => void): grpcWeb.ClientReadableStream<proto_auth_auth_pb.Thing>;
+               response: proto_auth_auth_pb.GetTokenResponse) => void): grpcWeb.ClientReadableStream<proto_auth_auth_pb.GetTokenResponse>;
 
-  getSomething(
-    request: proto_auth_auth_pb.Some,
+  getToken(
+    request: proto_auth_auth_pb.GetTokenRequest,
     metadata: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.Error,
-               response: proto_auth_auth_pb.Thing) => void) {
+               response: proto_auth_auth_pb.GetTokenResponse) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
-          '/auth.Auth/GetSomething',
+          '/auth.Auth/GetToken',
         request,
         metadata || {},
-        this.methodInfoGetSomething,
+        this.methodInfoGetToken,
         callback);
     }
     return this.client_.unaryCall(
     this.hostname_ +
-      '/auth.Auth/GetSomething',
+      '/auth.Auth/GetToken',
     request,
     metadata || {},
-    this.methodInfoGetSomething);
+    this.methodInfoGetToken);
+  }
+
+  methodInfoValidateToken = new grpcWeb.AbstractClientBase.MethodInfo(
+    proto_auth_auth_pb.ValidateTokenResponse,
+    (request: proto_auth_auth_pb.ValidateTokenRequest) => {
+      return request.serializeBinary();
+    },
+    proto_auth_auth_pb.ValidateTokenResponse.deserializeBinary
+  );
+
+  validateToken(
+    request: proto_auth_auth_pb.ValidateTokenRequest,
+    metadata: grpcWeb.Metadata | null): Promise<proto_auth_auth_pb.ValidateTokenResponse>;
+
+  validateToken(
+    request: proto_auth_auth_pb.ValidateTokenRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.Error,
+               response: proto_auth_auth_pb.ValidateTokenResponse) => void): grpcWeb.ClientReadableStream<proto_auth_auth_pb.ValidateTokenResponse>;
+
+  validateToken(
+    request: proto_auth_auth_pb.ValidateTokenRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.Error,
+               response: proto_auth_auth_pb.ValidateTokenResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/auth.Auth/ValidateToken',
+        request,
+        metadata || {},
+        this.methodInfoValidateToken,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/auth.Auth/ValidateToken',
+    request,
+    metadata || {},
+    this.methodInfoValidateToken);
   }
 
 }

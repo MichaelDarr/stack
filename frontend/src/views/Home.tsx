@@ -4,7 +4,10 @@ import { style } from 'typestyle';
 
 import { LogIn } from '../components/LogIn';
 import { authService } from '../proto/auth';
-import { Some } from '../../proto/auth/auth_pb';
+import {
+    GetTokenRequest,
+    ValidateTokenRequest,
+} from '../../proto/auth/auth_pb';
 
 const area = {
     login: 'login',
@@ -24,16 +27,23 @@ const containerClass = style({
 
 export const Home: FC = () => {
     useEffect(() => {
-        const request = new Some();
-        request.setX(1);
-        request.setY(2);
-        const metadata = {'custom-header-1': 'value1'};
-        authService.getSomething(request, metadata, ((err, res) => {
+        const request = new GetTokenRequest();
+        request.setId("myCoolID");
+        authService.getToken(request, {}, ((err, res) => {
             if (err) {
                 console.log(err);
-            } else {
-                console.log(res.getName());
+                return;
             }
+            const token = res.getToken()
+            const request = new ValidateTokenRequest();
+            request.setToken(token)
+            authService.validateToken(request, {}, ((err, res) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log({ valid: res.getValid() });
+            }))
         }));
     }, []);
 

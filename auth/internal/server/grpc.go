@@ -1,37 +1,37 @@
 package server
 
 import (
-	"context"
 	"fmt"
-	"log"
 	"net"
 
-	"github.com/MichaelDarr/stack/auth/internal/config"
+	"github.com/MichaelDarr/stack/auth/pkg/auth"
 	pb "github.com/MichaelDarr/stack/auth/proto/auth"
 	"google.golang.org/grpc"
 )
 
-// GRPC starts the grpc server.
-func GRPC(cfg *config.ServerConfig) {
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.Port))
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
-	}
+// GRPC is the a GRPC server.
+type GRPC struct {
+	grpcServer *grpc.Server
+	authServer *AuthServer
+}
+
+// NewGRPC creates an auth grpc server.
+func NewGRPC(key *auth.Key) *GRPC {
 	grpcServer := grpc.NewServer()
-	pb.RegisterAuthServer(grpcServer, newGrpcServer())
-	grpcServer.Serve(lis)
+	authServer := &AuthServer{key: key}
+	pb.RegisterAuthServer(grpcServer, authServer)
+
+	return &GRPC{
+		grpcServer,
+		authServer,
+	}
 }
 
-type grpcServer struct {
-	pb.UnimplementedAuthServer
-}
-
-func newGrpcServer() *grpcServer {
-	s := &grpcServer{}
-	return s
-}
-
-// GetSomething gets something.
-func (g *grpcServer) GetSomething(ctx context.Context, some *pb.Some) (*pb.Thing, error) {
-	return &pb.Thing{Name: fmt.Sprintf("%d %d", some.X, some.Y)}, nil
+// Serve accepts incoming connections.
+func (g GRPC) Serve(port int) error {
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
+	if err != nil {
+		return err
+	}
+	return g.grpcServer.Serve(lis)
 }

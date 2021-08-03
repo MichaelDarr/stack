@@ -6,14 +6,22 @@ package auth;
 
 // Interface exported by the server.
 service Auth {
-  rpc GetSomething(Some) returns (Thing) {}
+  rpc GetToken(GetTokenRequest) returns (GetTokenResponse) {}
+  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse) {}
 }
 
-message Some {
-  int32 x = 1;
-  int32 y = 2;
+message GetTokenRequest {
+  string id = 1;
 }
 
-message Thing {
-  string name = 1;
+message GetTokenResponse {
+  string token = 1;
+}
+
+message ValidateTokenRequest {
+  string token = 1;
+}
+
+message ValidateTokenResponse {
+  bool valid = 1;
 }
