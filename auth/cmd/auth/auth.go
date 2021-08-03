@@ -11,12 +11,17 @@ import (
 func main() {
 	cfg := config.New()
 
-	key, err := auth.GenerateRandomRSAKey()
+	keyOne, err := auth.GenerateRandomRSAKey()
 	if err != nil {
-		log.Fatalf("Failed to generate auth key: %v", err)
+		log.Fatalf("Failed to generate auth first key: %v", err)
 	}
 
-	keySet := auth.NewKeySet([]auth.Key{key})
+	keyTwo, err := auth.GenerateRandomRSAKey()
+	if err != nil {
+		log.Fatalf("Failed to generate auth second key: %v", err)
+	}
+
+	keySet := auth.NewKeySet([]auth.Key{keyOne, keyTwo})
 
 	grcpServer := server.NewGRPC(keySet)
 

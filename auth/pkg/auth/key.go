@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 
@@ -11,7 +12,7 @@ import (
 type Key interface {
 	// GetSigningMethod gets the signing method.
 	GetSigningMethod() jwt.SigningMethod
-	// GetJWK gets the JSON web key which will be marshalled to JSON.
+	// GetJWK gets JSON web key fields.
 	GetJWK() interface{}
 	// GetKeyID gets the key identifier.
 	GetKeyID() string
@@ -29,6 +30,19 @@ type KeySet struct {
 // NewKeySet creates a new JSON web key set.
 func NewKeySet(keys []Key) *KeySet {
 	return &KeySet{keys: keys}
+}
+
+// GetJWKS gets the JSON web key set.
+func (ks KeySet) GetJWKS() (string, error) {
+	jwksKeys := make([]interface{}, len(ks.keys))
+	for i, key := range ks.keys {
+		jwksKeys[i] = key.GetJWK()
+	}
+	marshalled, err := json.Marshal(jwksKeys)
+	if err != nil {
+		return "", err
+	}
+	return string(marshalled), nil
 }
 
 // GetVerificationKey gets the JSON web token verification key.

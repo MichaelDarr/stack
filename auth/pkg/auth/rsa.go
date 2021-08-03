@@ -16,9 +16,9 @@ type RSAKey struct {
 	privateKey *rsa.PrivateKey
 }
 
-// RSAJWK is an RSA JSON web key.
+// RSAJWK defines additional JWK fields included in RSA JSON web keys.
 type RSAJWK struct {
-	JWK
+	BaseJWK
 	// Modulus is the RSA key's modulus value.
 	Modulus string `json:"n"`
 	// Exponent is the RSA key's exponent value.
@@ -38,10 +38,10 @@ func GenerateRandomRSAKey() (*RSAKey, error) {
 	}, nil
 }
 
-// GetJWK gets the RSA JSON web key.
+// GetJWK gets JSON web key fields.
 func (r RSAKey) GetJWK() interface{} {
 	return RSAJWK{
-		JWK: JWK{
+		BaseJWK: BaseJWK{
 			Algorithm: "RS256",
 			KeyType:   "RSA",
 			KeyID:     r.GetKeyID(),

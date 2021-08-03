@@ -6,8 +6,15 @@ package auth;
 
 // Interface exported by the server.
 service Auth {
+  rpc GetJWKS(GetJWKSRequest) returns (GetJWKSResponse) {}
   rpc GetToken(GetTokenRequest) returns (GetTokenResponse) {}
   rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse) {}
+}
+
+message GetJWKSRequest {}
+
+message GetJWKSResponse {
+  string jwks = 1;
 }
 
 message GetTokenRequest {

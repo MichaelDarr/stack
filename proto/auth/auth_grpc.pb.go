@@ -18,6 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthClient interface {
+	GetJWKS(ctx context.Context, in *GetJWKSRequest, opts ...grpc.CallOption) (*GetJWKSResponse, error)
 	GetToken(ctx context.Context, in *GetTokenRequest, opts ...grpc.CallOption) (*GetTokenResponse, error)
 	ValidateToken(ctx context.Context, in *ValidateTokenRequest, opts ...grpc.CallOption) (*ValidateTokenResponse, error)
 }
@@ -28,6 +29,15 @@ type authClient struct {
 
 func NewAuthClient(cc grpc.ClientConnInterface) AuthClient {
 	return &authClient{cc}
+}
+
+func (c *authClient) GetJWKS(ctx context.Context, in *GetJWKSRequest, opts ...grpc.CallOption) (*GetJWKSResponse, error) {
+	out := new(GetJWKSResponse)
+	err := c.cc.Invoke(ctx, "/auth.Auth/GetJWKS", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *authClient) GetToken(ctx context.Context, in *GetTokenRequest, opts ...grpc.CallOption) (*GetTokenResponse, error) {
@@ -52,6 +62,7 @@ func (c *authClient) ValidateToken(ctx context.Context, in *ValidateTokenRequest
 // All implementations must embed UnimplementedAuthServer
 // for forward compatibility
 type AuthServer interface {
+	GetJWKS(context.Context, *GetJWKSRequest) (*GetJWKSResponse, error)
 	GetToken(context.Context, *GetTokenRequest) (*GetTokenResponse, error)
 	ValidateToken(context.Context, *ValidateTokenRequest) (*ValidateTokenResponse, error)
 	mustEmbedUnimplementedAuthServer()
@@ -61,6 +72,9 @@ type AuthServer interface {
 type UnimplementedAuthServer struct {
 }
 
+func (UnimplementedAuthServer) GetJWKS(context.Context, *GetJWKSRequest) (*GetJWKSResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetJWKS not implemented")
+}
 func (UnimplementedAuthServer) GetToken(context.Context, *GetTokenRequest) (*GetTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetToken not implemented")
 }
@@ -78,6 +92,24 @@ type UnsafeAuthServer interface {
 
 func RegisterAuthServer(s grpc.ServiceRegistrar, srv AuthServer) {
 	s.RegisterService(&Auth_ServiceDesc, srv)
+}
+
+func _Auth_GetJWKS_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetJWKSRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).GetJWKS(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/auth.Auth/GetJWKS",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).GetJWKS(ctx, req.(*GetJWKSRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Auth_GetToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -123,6 +155,10 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "auth.Auth",
 	HandlerType: (*AuthServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetJWKS",
+			Handler:    _Auth_GetJWKS_Handler,
+		},
 		{
 			MethodName: "GetToken",
 			Handler:    _Auth_GetToken_Handler,

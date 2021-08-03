@@ -14,6 +14,15 @@ type AuthServer struct {
 	keySet *auth.KeySet
 }
 
+// GetJWKS gets the JSON web key set.
+func (g *AuthServer) GetJWKS(ctx context.Context, req *pb.GetJWKSRequest) (*pb.GetJWKSResponse, error) {
+	jwks, err := g.keySet.GetJWKS()
+	if err != nil {
+		return nil, err
+	}
+	return &pb.GetJWKSResponse{Jwks: jwks}, nil
+}
+
 // GetToken gets an authentication token.
 func (g *AuthServer) GetToken(ctx context.Context, req *pb.GetTokenRequest) (*pb.GetTokenResponse, error) {
 	token, err := g.keySet.NewToken(auth.ClaimsOptions{

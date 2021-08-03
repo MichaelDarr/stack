@@ -2,6 +2,38 @@ import * as jspb from 'google-protobuf'
 
 
 
+export class GetJWKSRequest extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetJWKSRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetJWKSRequest): GetJWKSRequest.AsObject;
+  static serializeBinaryToWriter(message: GetJWKSRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetJWKSRequest;
+  static deserializeBinaryFromReader(message: GetJWKSRequest, reader: jspb.BinaryReader): GetJWKSRequest;
+}
+
+export namespace GetJWKSRequest {
+  export type AsObject = {
+  }
+}
+
+export class GetJWKSResponse extends jspb.Message {
+  getJwks(): string;
+  setJwks(value: string): GetJWKSResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetJWKSResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: GetJWKSResponse): GetJWKSResponse.AsObject;
+  static serializeBinaryToWriter(message: GetJWKSResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetJWKSResponse;
+  static deserializeBinaryFromReader(message: GetJWKSResponse, reader: jspb.BinaryReader): GetJWKSResponse;
+}
+
+export namespace GetJWKSResponse {
+  export type AsObject = {
+    jwks: string,
+  }
+}
+
 export class GetTokenRequest extends jspb.Message {
   getId(): string;
   setId(value: string): GetTokenRequest;

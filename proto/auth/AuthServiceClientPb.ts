@@ -35,6 +35,46 @@ export class AuthClient {
     this.options_ = options;
   }
 
+  methodInfoGetJWKS = new grpcWeb.AbstractClientBase.MethodInfo(
+    proto_auth_auth_pb.GetJWKSResponse,
+    (request: proto_auth_auth_pb.GetJWKSRequest) => {
+      return request.serializeBinary();
+    },
+    proto_auth_auth_pb.GetJWKSResponse.deserializeBinary
+  );
+
+  getJWKS(
+    request: proto_auth_auth_pb.GetJWKSRequest,
+    metadata: grpcWeb.Metadata | null): Promise<proto_auth_auth_pb.GetJWKSResponse>;
+
+  getJWKS(
+    request: proto_auth_auth_pb.GetJWKSRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.Error,
+               response: proto_auth_auth_pb.GetJWKSResponse) => void): grpcWeb.ClientReadableStream<proto_auth_auth_pb.GetJWKSResponse>;
+
+  getJWKS(
+    request: proto_auth_auth_pb.GetJWKSRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.Error,
+               response: proto_auth_auth_pb.GetJWKSResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/auth.Auth/GetJWKS',
+        request,
+        metadata || {},
+        this.methodInfoGetJWKS,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/auth.Auth/GetJWKS',
+    request,
+    metadata || {},
+    this.methodInfoGetJWKS);
+  }
+
   methodInfoGetToken = new grpcWeb.AbstractClientBase.MethodInfo(
     proto_auth_auth_pb.GetTokenResponse,
     (request: proto_auth_auth_pb.GetTokenRequest) => {

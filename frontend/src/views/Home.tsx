@@ -5,6 +5,7 @@ import { style } from 'typestyle';
 import { LogIn } from '../components/LogIn';
 import { authService } from '../proto/auth';
 import {
+    GetJWKSRequest,
     GetTokenRequest,
     ValidateTokenRequest,
 } from '../../proto/auth/auth_pb';
@@ -45,6 +46,17 @@ export const Home: FC = () => {
                 console.log({ valid: res.getValid() });
             }))
         }));
+    }, []);
+
+    useEffect(() => {
+        const request = new GetJWKSRequest();
+        authService.getJWKS(request, {}, ((err, res) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            console.log(res.getJwks());
+        }))
     }, []);
 
     return (
