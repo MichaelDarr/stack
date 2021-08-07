@@ -1,0 +1,42 @@
+config:
+  addDocBlocks: false
+  addOperationExport: false
+  apolloClientVersion: 3
+  avoidOptionals:
+    defaultValue: false
+    field: true
+    inputValue: false
+    object: true
+  declarationKind: 'interface'
+  disableDescriptions: true
+  flattenGeneratedTypes: false
+  onlyOperationTypes: true
+  preResolveTypes: true
+  reactApolloVersion: 3
+  skipTypename: true
+  typesPrefix: I
+  useImplementingTypes: true
+  withHooks: true
+  withMutationFn: false
+  withMutationOptionsType: true
+  withResultType: true
+documents:
+  - 'src/fragments/**/*.graphql'
+  - 'src/mutations/**/*.graphql'
+  - 'src/queries/**/*.graphql'
+  - 'src/subscriptions/**/*.graphql'
+generates:
+  src/graphql/index.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+  src/graphql/introspection.ts:
+    plugins:
+      - fragment-matcher
+  src/graphql/typePolicies.ts:
+    plugins:
+      - typescript-apollo-client-helpers
+namingConvention: change-case-all#pascalCase
+overwrite: true
+schema: 'schema/*.graphql'
